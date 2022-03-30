@@ -1,14 +1,15 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:liveasy_assignment/screens/profile_selection.dart';
 import 'package:pinput/pinput.dart';
 
 class VerificationScreen extends StatefulWidget {
 
-  VerificationScreen({required this.phone});
+  VerificationScreen({required this.phone, required this.verificationCode});
 
   final String phone;
+  final String verificationCode;
   // static const String id = 'verification_screen';
 
   @override
@@ -18,45 +19,37 @@ class VerificationScreen extends StatefulWidget {
 class _VerificationScreenState extends State<VerificationScreen> {
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late String _verificationCode;
+
   final TextEditingController _pinPutController = TextEditingController();
 
-  late String _pin;
-  // final FocusNode _pinPutFocusNode = FocusNode();
+  FirebaseAuth auth = FirebaseAuth.instance;
 
 
-  _verifyPhone() async{
-    await FirebaseAuth.instance.verifyPhoneNumber(
-        phoneNumber: '+91${widget.phone}',
-        verificationCompleted: (PhoneAuthCredential credential) async{
-          await FirebaseAuth.instance.signInWithCredential(credential).then((value) async{
-            if(value.user != null){
-              Navigator.pushNamed(context, ProfileSelection.id);
-            }
-          });
-        },
-        verificationFailed: (FirebaseAuthException e){
-          print(e.message);
-        },
-        codeSent: (String verificationID, int ? resendToken){
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verificationID){
-          setState(() {
-            _verificationCode = verificationID;
-          });
-        },
-        timeout: Duration(seconds: 60)
-    );
+   verifyOTP() async {
+    try{
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(verificationId: widget.verificationCode, smsCode: _pinPutController.text);
+      print(widget.verificationCode);
+      await auth.signInWithCredential(credential).then((value){
+        print("You are logged in successfully");
+        Navigator.pushNamed(context, ProfileSelection.id);
+      });
+    }
+    catch(e){
+      print(e);
+      print('Login not successful!');
+      Fluttertoast.showToast(
+          msg: "Invalid OTP!",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+    }
+
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _verifyPhone();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,20 +124,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   )
                 ),
                 pinAnimationType: PinAnimationType.fade,
-                onSubmitted: (pin) async{
-                  _pin = pin;
-                  try{
-                    await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode, smsCode: _pin)).then((value) async{
-                      if(value.user != null){
-                        Navigator.pushNamed(context, ProfileSelection.id);
-                      }
-                    });
-                  }
-                  catch(e){
-                    FocusScope.of(context).unfocus();
-                    _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text('Ivalid OTP!')));
-                  }
-              },
               )
             ),
             Row(
@@ -185,22 +164,14 @@ class _VerificationScreenState extends State<VerificationScreen> {
                   color: Color(0xff2e3b62),
                   minWidth: double.infinity,
                   height: 50.0,
-                  onPressed: () {
-                        (pin) async{
-                      _pin = pin;
+                  onPressed: () async{
                       try{
-                        await FirebaseAuth.instance.signInWithCredential(PhoneAuthProvider.credential(verificationId: _verificationCode, smsCode: _pin)).then((value) async{
-                          if(value.user != null){
-                            Navigator.pushNamed(context, ProfileSelection.id);
-                          }
-                        });
+                          await verifyOTP();
                       }
                       catch(e){
                         FocusScope.of(context).unfocus();
-                        _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text('Ivalid OTP!')));
+                        // _scaffoldKey.currentState?.showSnackBar(SnackBar(content: Text('Ivalid OTP!')));
                       }
-                    };
-
                   }),
             )
           ],
@@ -208,5 +179,4 @@ class _VerificationScreenState extends State<VerificationScreen> {
       ),
     );
   }
-
 }

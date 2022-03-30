@@ -31,133 +31,129 @@ class _ProfileSelectionState extends State<ProfileSelection> {
             SizedBox(
               height: 30.0,
             ),
-            GestureDetector(
-              child: Container(
-                height: 89.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                ),
-                child: Row(
-                  children: [
-                    Radio(
-                      value: 1,
-                      groupValue: val,
-                      onChanged: (int ? value) {
-                        setState(() {
-                          val = value!;
-                        });
-                      },
-                      activeColor: Color(0xff2e3b62),
+            Container(
+              height: 89.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1),
+              ),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 1,
+                    groupValue: val,
+                    onChanged: (int ? value) {
+                      setState(() {
+                        val = value!;
+                      });
+                    },
+                    activeColor: Color(0xff2e3b62),
+                  ),
+                  Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/warehouse.png'),
+                            fit: BoxFit.fill,
+                          )
+                      ),
+
+
                     ),
-                    Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Container(
-                        height: 40.0,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('images/warehouse.png'),
-                              fit: BoxFit.fill,
-                            )
-                        ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 77.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Shipper'
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          Flexible(
 
-
+                            child: Text(
+                              'Lorem ipsum dolor sit amet, consectetur adipiscing'
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 77.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                'Shipper'
-                              ),
-                            ),
-                            SizedBox(
-                              height: 8.0,
-                            ),
-                            Flexible(
-
-                              child: Text(
-                                'Lorem ipsum dolor sit amet, consectetur adipiscing'
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
             SizedBox(
               height: 24.0,
             ),
-            GestureDetector(
-              child: Container(
-                height: 100.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                ),
-                child: Row(
-                  children: [
-                    Radio(
-                      value: 1,
-                      groupValue: val,
-                      onChanged: (int ? value) {
-                        setState(() {
-                          val = value!;
-                        });
-                      },
-                      activeColor: Color(0xff2e3b62),
+            Container(
+              height: 100.0,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.black, width: 1),
+              ),
+              child: Row(
+                children: [
+                  Radio(
+                    value: 2,
+                    groupValue: val,
+                    onChanged: (int ? value) {
+                      setState(() {
+                        val = value!;
+                      });
+                    },
+                    activeColor: Color(0xff2e3b62),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Container(
+                      height: 40.0,
+                      width: 40.0,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('images/truck.png'),
+                            fit: BoxFit.fill,
+                          )
+                      ),
+
+
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Container(
-                        height: 40.0,
-                        width: 40.0,
-                        decoration: BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('images/truck.png'),
-                              fit: BoxFit.fill,
-                            )
-                        ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 77.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Flexible(
+                            child: Text(
+                                'Transporter'
+                            ),
+                          ),
+                          SizedBox(
+                            height: 8.0,
+                          ),
+                          Flexible(
 
-
+                            child: Text(
+                                'Lorem ipsum dolor sit amet, consectetur adipiscing'
+                            ),
+                          )
+                        ],
                       ),
                     ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 77.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              child: Text(
-                                  'Transporter'
-                              ),
-                            ),
-                            SizedBox(
-                              height: 8.0,
-                            ),
-                            Flexible(
-
-                              child: Text(
-                                  'Lorem ipsum dolor sit amet, consectetur adipiscing'
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             )
 
